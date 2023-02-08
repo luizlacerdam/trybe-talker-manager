@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/talker', async (req, res) => {
     const talker = await readFs();
-    console.log(talker);
+    res.status(200).send(talker);
 });
 
 module.exports = router;
