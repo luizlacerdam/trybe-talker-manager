@@ -1,8 +1,9 @@
 const express = require('express');
+const routers = require('./middlewares/routers');
 
 const app = express();
 app.use(express.json());
-
+app.use('/talker', routers);
 const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
@@ -12,5 +13,7 @@ app.get('/', (_request, response) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Online');
+  console.log('Online on 3000');
 });
+
+app.use(routers);
