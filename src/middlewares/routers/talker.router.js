@@ -27,7 +27,7 @@ async (req, res) => {
     const newTalker = req.body;
     const talkers = await readFs();
     await writeFs([...talkers, { id: talkers.length + 1, ...newTalker }]);
-    res.status(200).json({ id: talkers.length + 1, ...newTalker });
+    res.status(201).json({ id: talkers.length + 1, ...newTalker });
 });
 router.get('/talker/:id', validateTalkerId, async (req, res) => {
     const { id } = req.params;
