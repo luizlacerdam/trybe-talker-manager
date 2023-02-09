@@ -5,6 +5,8 @@ const validateAge = require('../validateAge');
 const validateName = require('../validateName');
 const validateTalk = require('../validateTalk');
 const validateWatchAt = require('../validateWatchAt');
+const validateRate = require('../validateRate');
+
 const auth = require('../auth');
 const writeFs = require('../../utils/writeFs');
 
@@ -14,7 +16,14 @@ router.get('/talker', async (req, res) => {
     const talkers = await readFs();
     res.status(200).send(talkers);
 });
-router.post('/talker', auth, validateName, validateAge, validateTalk, validateWatchAt, async (req, res) => {
+router.post('/talker', 
+auth, 
+validateName, 
+validateAge, 
+validateTalk,
+validateWatchAt,
+validateRate,
+async (req, res) => {
     const newTalker = req.body;
     const talkers = await readFs();
     await writeFs([...talkers, { id: talkers.length + 1, ...newTalker }]);
