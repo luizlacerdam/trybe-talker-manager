@@ -1,12 +1,11 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const talker = path.resolve(__dirname, '../talker.json');
+const talkers = path.resolve(__dirname, '../talker.json');
 
-module.exports = async () => {
+module.exports = async (talker) => {
     try {
-        const data = await fs.writeFile(talker);
-        return JSON.parse(data);
+       await fs.writeFile(talkers, JSON.stringify(talker));
     } catch (error) {
         console.error(`Arquivo não pôde ser lido: ${error}`);
     }
