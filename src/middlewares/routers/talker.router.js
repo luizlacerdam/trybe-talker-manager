@@ -10,7 +10,7 @@ router.get('/talker', async (req, res) => {
 });
 router.post('/talker', async (req, res) => {
     const talkers = await readFs();
-    res.status(200).send(talkers);
+    res.status(200).send('POST');
 });
 router.get('/talker/:id', validateTalkerId, async (req, res) => {
     const { id } = req.params;
