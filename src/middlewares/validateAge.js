@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     if (typeof age !== 'number') {
       return res.status(400).json({ message: 'O campo "age" deve ser do tipo "number"' });
     }
-    if (Math.floor(age) !== age) {
+    if (!Number.isInteger(age)) {
       return res.status(400)
       .json({ message: 'O campo "age" deve ser um "number" do tipo inteiro' });
     }
