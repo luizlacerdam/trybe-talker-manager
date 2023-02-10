@@ -68,7 +68,6 @@ router.get('/search', auth, async (req, res) => {
     if (!q) return res.status(200).json(talkers);
     const searchResult = talkers.filter((talker) => talker.name
     .toLowerCase().includes(q.toLowerCase()));
-    console.log(searchResult);
     res.status(200).json(searchResult);
 });
 
