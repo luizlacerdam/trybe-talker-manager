@@ -62,4 +62,14 @@ router.delete('/talker/:id', auth, async (req, res) => {
     res.status(204).end();
 });
 
+router.get('/search', auth, async (req, res) => {
+    const { q } = req.query;
+    const talkers = await readFs();
+    if (!q) return res.status(200).json(talkers);
+    const searchResult = talkers.filter((talker) => talker.name
+    .toLowerCase().includes(q.toLowerCase()));
+    console.log(searchResult);
+    res.status(200).json(searchResult);
+});
+
 module.exports = router;
