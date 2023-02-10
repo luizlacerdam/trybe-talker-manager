@@ -16,6 +16,7 @@ router.get('/talker', async (req, res) => {
     const talkers = await readFs();
     res.status(200).send(talkers);
 });
+
 router.post('/talker', 
 auth, 
 validateName, 
@@ -29,6 +30,22 @@ async (req, res) => {
     await writeFs([...talkers, { id: talkers.length + 1, ...newTalker }]);
     res.status(201).json({ id: talkers.length + 1, ...newTalker });
 });
+
+router.put('/talker/:id', auth, 
+validateName, 
+validateAge, 
+validateTalk,
+validateWatchAt,
+validateRate, async (req, res) => {
+    const { id } = req.params;
+    const newTalker = req.body;
+    const talkers = await readFs();
+    const talkerIndex = talkers.findIndex((talker) => talker.id === Number(id));
+    talkers[talkerIndex] = { id: +id, ...newTalker };
+    await writeFs(talkers);
+    res.status(200).json(talkers[talkerIndex]);
+});
+
 router.get('/talker/:id', validateTalkerId, async (req, res) => {
     const { id } = req.params;
     const talkers = await readFs();
