@@ -17,6 +17,13 @@ router.get('/talker', async (req, res) => {
     res.status(200).send(talkers);
 });
 
+router.get('/talker/:id', validateTalkerId, async (req, res) => {
+    const { id } = req.params;
+    const talkers = await readFs();
+    const talker = talkers.find((t) => t.id === Number(id));
+    res.status(200).send(talker);
+});
+
 router.post('/talker', 
 auth, 
 validateName, 
@@ -46,11 +53,13 @@ validateRate, async (req, res) => {
     res.status(200).json(talkers[talkerIndex]);
 });
 
-router.get('/talker/:id', validateTalkerId, async (req, res) => {
+router.delete('/talker/:id', auth, async (req, res) => {
     const { id } = req.params;
     const talkers = await readFs();
-    const talker = talkers.find((t) => t.id === Number(id));
-    res.status(200).send(talker);
+    const talkerIndex = talkers.findIndex((talker) => talker.id === Number(id));
+    talkers.splice(talkerIndex, 1);
+    await writeFs(talkers);
+    res.status(204).end();
 });
 
 module.exports = router;
